@@ -1,34 +1,42 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CostumesService } from './costumes.service';
+// costumes.controller.ts
+
+import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { CostumeService } from './costumes.service';
 import { CreateCostumeDto } from './dto/create-costume.dto';
-import { UpdateCostumeDto } from './dto/update-costume.dto';
 
 @Controller('costumes')
-export class CostumesController {
-  constructor(private readonly costumesService: CostumesService) {}
+export class CostumeController {
+  constructor(private readonly costumeService: CostumeService) {}
 
-  @Post()
-  create(@Body() createCostumeDto: CreateCostumeDto) {
-    return this.costumesService.create(createCostumeDto);
+  @Get('attendees/:attendeeId/costumes')
+  getAttendeeCostumes(@Param('attendeeId') attendeeId: string) {
+    return this.costumeService.getAttendeeCostumes(+attendeeId);
   }
 
   @Get()
-  findAll() {
-    return this.costumesService.findAll();
+  getAllCostumes() {
+    return this.costumeService.getAllCostumes();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.costumesService.findOne(+id);
+  @Post('attendees/purchase')
+  purchaseCostumes(@Body() purchaseCostumesDto: any) {
+    const { attendeeId, costumeId, amountPaid } = purchaseCostumesDto;
+    return this.costumeService.purchaseCostumes(+attendeeId, +costumeId, +amountPaid);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCostumeDto: UpdateCostumeDto) {
-    return this.costumesService.update(+id, updateCostumeDto);
+  @Post()
+  createCostume(@Body() createCostumeDto: CreateCostumeDto) {
+    return this.costumeService.createCostume(createCostumeDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.costumesService.remove(+id);
+  @Patch('attendees/costumes')
+  updateCostumeTransaction(@Body() updateCostumeTransactionDto: any) {
+    const { transactionId, amountPaid } = updateCostumeTransactionDto;
+    return this.costumeService.updateCostumeTransaction(+transactionId, +amountPaid);
+  }
+
+  @Delete('attendees/costumes/:transactionId')
+  deleteCostumeTransaction(@Param('transactionId') transactionId: string) {
+    return this.costumeService.deleteCostumeTransaction(+transactionId);
   }
 }

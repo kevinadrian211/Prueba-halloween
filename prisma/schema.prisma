@@ -20,6 +20,9 @@ model Costume {
   stock       Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  // Relations
+  transactions CostumeTransaction[]
 }
 
 model Attendee {
@@ -34,6 +37,11 @@ model Attendee {
   isNervous Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Relations
+  budget Budget?
+  transactions CostumeTransaction[]
+  terrorHouseAccess TerrorHouseAccess?
 }
 
 model Party {
@@ -43,4 +51,58 @@ model Party {
   address   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  // Relations
+  configurations PartyConfiguration[]
+}
+
+model Budget {
+  id        Int      @id @default(autoincrement())
+  attendeeId Int     @unique
+  amount    Int
+  timestamp DateTime
+
+  // Relations
+  attendee Attendee @relation(fields: [attendeeId], references: [id])
+}
+
+model Activity {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+
+  // Add other fields as needed
+}
+
+model PartyConfiguration {
+  id          Int      @id @default(autoincrement())
+  partyId     Int
+  music       String?
+  decorations String?
+  theme       String?
+
+  // Relations
+  party Party @relation(fields: [partyId], references: [id])
+}
+
+model CostumeTransaction {
+  id        Int      @id @default(autoincrement())
+  attendeeId Int
+  costumeId  Int
+  amountPaid Int
+  timestamp  DateTime
+
+  // Relations
+  attendee Attendee @relation(fields: [attendeeId], references: [id])
+  costume Costume @relation(fields: [costumeId], references: [id])
+}
+
+model TerrorHouseAccess {
+  id        Int      @id @default(autoincrement())
+  attendeeId Int     @unique
+  allowed   Boolean
+  timestamp DateTime
+
+  // Relations
+  attendee Attendee @relation(fields: [attendeeId], references: [id])
 }

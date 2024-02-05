@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Seed data for Costume
   const costume1 = await prisma.costume.create({
     data: {
       name: 'WereWolf Costume',
@@ -26,7 +25,6 @@ async function main() {
     },
   });
 
-
   const costume3 = await prisma.costume.create({
     data: {
       name: 'Ghost Costume',
@@ -38,8 +36,6 @@ async function main() {
     },
   });
 
-
-  // Seed data for Attendee
   const attendee1 = await prisma.attendee.create({
     data: {
       dni: '12345678',
@@ -79,8 +75,6 @@ async function main() {
     },
   });
 
-
-  // Seed data for Party
   const party1 = await prisma.party.create({
     data: {
       name: 'Halloween Bash',
@@ -105,6 +99,39 @@ async function main() {
     },
   });
 
+  const budget1 = await prisma.budget.create({
+    data: {
+      attendeeId: attendee1.id,
+      amount: 100,
+      timestamp: new Date(),
+    },
+  });
+
+  const budget2 = await prisma.budget.create({
+    data: {
+      attendeeId: attendee2.id,
+      amount: 150,
+      timestamp: new Date(),
+    },
+  });
+
+  const activity1 = await prisma.activity.create({
+    data: {
+      name: 'Scary Maze',
+      description: 'A spooky maze for Halloween',
+    },
+  });
+
+  const partyConfig1 = await prisma.partyConfiguration.create({
+    data: {
+      partyId: party1.id,
+      music: 'Haunted Tunes',
+      decorations: 'Spooky Ghosts',
+      theme: 'Classic Halloween',
+    },
+  });
+
+  console.log('Seeding completed!');
 }
 
 main()

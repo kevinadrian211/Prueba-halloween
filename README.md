@@ -32,3 +32,24 @@
 1. **Endpoint `/attendees/nervous`**: Crea un endpoint que devuelva la lista de asistentes que están nerviosos. Esto es importante para la actividad posterior a la fiesta, como la visita a una casa del terror, donde no se recomienda la entrada a personas nerviosas.
 
 ---
+
+
+
+
+
+luego de completar ese código cree varios recursos los cuales están estructurados de la siguiente manera:
+
+dentro de cada uno de mis recursos existen unicamente :
+los archivos: "costume.service", "costume.service.spect", "costume.module", "costume.controller", "costume.controller.spect".
+una capeta entities: que tiene dentro el archivo costume.entity
+una carpeta dto: que tiene dentro los archivos "créate-customes.dto" y "update-costumes.dt".
+
+esta estructura se encuentra dentro de cada una de mis recursos el cual unicamente va variando dependiendo de los nombres de los recursos los cuales son:
+activity,
+attendees,
+budget,
+costumes,
+costumetransaction,
+parties,
+partyconfiguration,
+terrorhouse
